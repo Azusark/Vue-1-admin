@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>
-      App根组件
+      <router-view></router-view>
     </h1>
   </div>
 </template>
@@ -9,13 +9,6 @@
 
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import { reqLogin } from './api/user';
-
-onMounted(() => {
-  console.log('App组件已挂载');
-  reqLogin({username: 'admin', password: '111111'})
-});
 
 </script>
 
