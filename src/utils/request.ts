@@ -14,7 +14,6 @@ let request = axios.create({
 request.interceptors.request.use((config)=>{
     //config配置对象,headers属性请求头，经常给服务器端携带公共参数
     //返回配置对象
-
     return config; 
 });
 
@@ -28,31 +27,35 @@ request.interceptors.response.use((response)=>{
     //定义一个变量：存储网络错误信息
     let message = '';
     //http状态码
-    let status = error.response.status; //获取错误状态码
-    switch (status) {
-        case 401:
-            message = 'token过期';
-            break;
-        case 403:
-            message = '没有权限';
-            break;
-        case 404:
-            message = '请求地址不存在';
-            break;
-        case 500:
-            message = '服务器内部错误';
-            break;
-        default:
-            message = '网络错误';
-            break;
+    if (error.response) {
+        let status = error.response.status; //获取错误状态码
+        switch (status) {
+            case 401:
+                message = 'token过期';
+                break;
+            case 403:
+                message = '没有权限';
+                break;
+            case 404:
+                message = '请求地址不存在';
+                break;
+            case 500:
+                message = '服务器内部错误';
+                break;
+            default:
+                message = '网络错误';
+                break;
         }
+    } else {
+        message = '网络连接失败';
+    }
     //提示错误信息
     ElMessage({
         type: 'error',
         message
     });
 
-    return Promise.reject(error); //返回一个失败的Promise对象`
+    return Promise.reject(error); //返回一个失败的Promise对象
 })  
 
 //对外暴露

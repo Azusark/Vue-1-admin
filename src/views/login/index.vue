@@ -3,7 +3,7 @@
         <el-row>
             <el-col :span="12" :xs="0"></el-col>
             <el-col :span="12" :xs="24">
-                <el-form class="login_form">
+                <el-form class="login_form" :model="loginForm" :rules="rules">
                     <h1>Hello</h1>
                     <h2>欢迎来到硅谷甄选</h2>
                 <el-form-item>
@@ -13,7 +13,7 @@
                     <el-input type="password" :prefix-icon=Lock placeholder="请输入密码" v-model="loginForm.password" show-password></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button class="login_btn" type="primary" size="default" @click="login">登录</el-button>
+                    <el-button :loading="loading" class="login_btn" type="primary" size="default" @click="login">登录</el-button>
                 </el-form-item>
             </el-form>
         </el-col>
@@ -23,22 +23,64 @@
 
 <script setup>
 import { User,Lock } from '@element-plus/icons-vue';
-import { reactive } from 'vue';
+import { reactive,ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { ElNotification } from 'element-plus';
 //引入用户相关小仓库
-import useUserStore  from '@/store/modules/user';
-let userStore = useUserStore();
+import useuseStore  from '@/store/modules/user';
+import { lo } from 'element-plus/es/locales.mjs';
+let useStore = useuseStore();
+//获取路由器
+let $router = useRouter();
 //收集账号与密码的数据
+let loading = ref(false);
+//控制按钮加载
+
+
 let loginForm = reactive({
     username: 'admin',
     password: '111111'
 }); 
 
-const login = () => {
-    //通知请求
-    //请求成功
-    //请求失败
-    useStore.userLogin();
+const login = async() => {
+
+    loading.value = true;
+    try {
+        //保证登录成功
+
+        await useStore.userLogin(loginForm);
+        $router.push('/'); // 登录成功后跳转到首页
+        ElNotification({
+            title: '登录成功',
+            message: '欢迎回来！',
+            type: 'success',
+            duration: 3000
+        });
+        loading.value = false;
+    } catch(error) {
+        loading.value = false;
+        ElNotification({
+            title: '登录失败',
+            message: '请检查用户名和密码是否正确',
+            type: 'error',
+            duration: 3000
+        })
+
+    }
 }
+
+const rules = {
+    username: [
+        { required: true, message: '请输入用户名', trigger: 'blur' },
+        { min: 6, max: 10, message: '用户名长度只能有6到10个字符', trigger: 'blur' }
+    ],
+    //trigger: 'blur' 失去焦点时验证
+    password: [
+        { required: true, message: '请输入密码', trigger: 'blur' },
+        { min: 6, max: 16, message: '密码长度只能有6到16个字符', trigger: 'blur' }
+    ]
+}
+
 </script>
 
 <style scoped>  
