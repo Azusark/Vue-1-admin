@@ -1,8 +1,10 @@
 //引入项目中全部全局组件
-// @ts-ignore
+
 import SvgIcon from './SvgIcon/index.vue';
-// @ts-ignore
 import Pagination from './Pagination/index.vue';
+//引入element-plus提供全部图标组件
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+
 import type { App } from 'vue';
 //对外暴露插件对象
 
@@ -15,5 +17,9 @@ export default {
         Object.keys(allGloablComponents).forEach(key => {
             app.component(key, allGloablComponents[key]);
         });
+        //将element-plus提供的全部图标全局注册
+        for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+            app.component(key, component)
+        }
     }
 }
