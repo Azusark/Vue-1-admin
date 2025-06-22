@@ -1,8 +1,8 @@
 <template>
     <div class="login_container">
         <el-row>
-            <el-col :span="12" :xs="0"></el-col>
-            <el-col :span="12" :xs="24">
+            <el-col :span="14" :xs="0"></el-col>
+            <el-col :span="10" :xs="24">
                 <el-form class="login_form" :model="loginForm" :rules="rules" ref="loginForms">
                     <h1>Hello</h1>
                     <h2>欢迎访问莱茵数据中心</h2>
@@ -100,7 +100,7 @@ const rules = {
 
 .login_form {
     position: relative;
-    width: 62%;
+    width: 50%;
     top: 30vh;
     background: url('@/assets/images/login_form.png') no-repeat;
     background-size: cover;

@@ -25,9 +25,11 @@
 
 <script setup lang="ts">
 defineProps(['menuList'])
-
+import { useRouter } from 'vue-router'
+let $router = useRouter()
 const goRoute = (vc:any) => {
-    console.log(vc.index);
+    //路由跳转
+    $router.push(vc.index)
 }
 
 </script>

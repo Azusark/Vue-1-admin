@@ -1,7 +1,7 @@
 <template>
     <div>
         
-            <GenericPage :pageMeta="{ title: '用户管理', icon: 'User' }" />
+            <GenericPage :pageMeta="{ title: 'sku管理', icon: 'User' }" />
         
 
     </div>

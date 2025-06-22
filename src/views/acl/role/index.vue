@@ -1,13 +1,14 @@
 <template>
     <div>
-        <h1>角色管理</h1>
+        
+            <GenericPage :pageMeta="{ title: '角色管理', icon: 'User' }" />
+        
+
     </div>
 </template>
 
-<script>
-
+<script setup>
+import GenericPage from '@/components/GenericPage/GenericPage.vue'
 </script>
 
-<style>
-
-</style>
+<style></style>

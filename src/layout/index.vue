@@ -2,21 +2,25 @@
     <div class="layout_container">
         <div class="layout_slider">
             <Logo></Logo>
-            <!--展示菜单-->
+            <!-- 展示菜单 -->
+            <!-- 滚动组件 -->
             <el-scrollbar class="scrollbar">
                 <!-- 菜单组件 -->
-                <el-menu background-color=#1f1e33 text-color="#fff" active-text-color="#ffd04b">
+                <el-menu background-color=#444555 text-color="#fff" active-text-color="#ffd04b">
+                    <!-- 根据路由动态生成菜单 -->
                     <Menu :menuList=userStore.menuRoutes></Menu>
                 </el-menu>
             </el-scrollbar>
         </div>
-
+        <!-- 顶部导航 -->
         <div class="layout_tabbar">
-
+            <Tabbar></Tabbar>
         </div>
-
+        <!-- 内容展示区 -->
         <div class="layout_main">
-            <p style="height:10000px;margin-top: 20px;background-color: black;"></p>
+            <Main>
+                
+            </Main>
         </div>
     </div>
 </template>
@@ -26,6 +30,11 @@
 import Logo from './logo/index.vue'
 //菜单组件
 import Menu from './menu/index.vue'
+//右侧内容展示区域
+import Main from './main/index.vue'
+//引入tabbar 
+import Tabbar from './tabbar/index.vue';
+//获取
 import useuseStore from '@/store/modules/user';
 let userStore = useuseStore();
 </script>
@@ -36,11 +45,12 @@ let userStore = useuseStore();
     height: 100vh;
     background: white;
     overflow: hidden; // 防止外层滚动条
+    
 
     .layout_slider {
         width: $base-menu-width+5px;
         height: 100vh;
-        background: $base-menu-background;
+        background: linear-gradient(to bottom, #33484e, #5a3f73);
         float: left;
 
         .logo {
@@ -67,7 +77,7 @@ let userStore = useuseStore();
         position: absolute;
         width: calc(100% - $base-menu-width);
         height: calc(100vh - $base-tabbar-height);
-        background-color: yellowgreen;
+        background-color: #1f1e33;
         left: $base-menu-width;
         top: $base-tabbar-height;
         padding: 20px;
