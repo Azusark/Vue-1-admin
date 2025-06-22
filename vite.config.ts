@@ -19,7 +19,6 @@ export default defineConfig(({ command }) => {
         symbolId: 'icon-[name]',
       }),
       viteMockServe({
-        localEnabled: command === 'serve', 
         //保证开发阶段可以使用mock接口
         })
     ],
@@ -41,6 +40,5 @@ export default defineConfig(({ command }) => {
       }
     }
   }
-}
-)
+})
 

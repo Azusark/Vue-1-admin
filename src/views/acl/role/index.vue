@@ -1,9 +1,9 @@
 <template>
     <div>
-        
-            <GenericPage :pageMeta="{ title: '角色管理', icon: 'User' }" />
-        
-
+        <GenericPage 
+            :pageMeta="{ title: '角色管理', icon: 'UserFilled' }" 
+            dataType="role"
+        />
     </div>
 </template>
 

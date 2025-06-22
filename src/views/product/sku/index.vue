@@ -1,9 +1,9 @@
 <template>
     <div>
-        
-            <GenericPage :pageMeta="{ title: 'sku管理', icon: 'User' }" />
-        
-
+        <GenericPage 
+            :pageMeta="{ title: 'SKU管理', icon: 'Orange' }" 
+            dataType="sku"
+        />
     </div>
 </template>
 

@@ -1,9 +1,9 @@
 <template>
     <div>
-        
-            <GenericPage :pageMeta="{ title: '菜单管理', icon: 'User' }" />
-        
-
+        <GenericPage 
+            :pageMeta="{ title: '菜单管理', icon: 'Monitor' }" 
+            dataType="permission"
+        />
     </div>
 </template>
 

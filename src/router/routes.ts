@@ -19,9 +19,9 @@ export const constantRoute = [{
 {
     //主页
     path: '/',
-    name: '首页',
+    name: '用户',
     meta: {
-        title: 'layout',
+        title: '用户',
         hidden: false,
         icon: "UserFilled",//图标
         
@@ -132,7 +132,7 @@ export const constantRoute = [{
             }
         },
         {
-            path: '/product/attrk',
+            path: '/product/attr',
             component: () => import('@/views/product/attr/index.vue'),
             name: "attr",
             meta: {

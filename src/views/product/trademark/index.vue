@@ -1,9 +1,9 @@
 <template>
     <div>
-        
-            <GenericPage :pageMeta="{ title: '商品管理', icon: 'User' }" />
-        
-
+        <GenericPage 
+            :pageMeta="{ title: '品牌管理', icon: 'ShoppingCartFull' }" 
+            dataType="brand"
+        />
     </div>
 </template>
 

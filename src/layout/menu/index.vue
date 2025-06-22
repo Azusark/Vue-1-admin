@@ -24,14 +24,15 @@
 </template>
 
 <script setup lang="ts">
-defineProps(['menuList'])
 import { useRouter } from 'vue-router'
+
+defineProps(['menuList'])
+
 let $router = useRouter()
 const goRoute = (vc:any) => {
     //路由跳转
     $router.push(vc.index)
 }
-
 </script>
 
 <script lang="ts">

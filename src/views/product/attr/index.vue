@@ -1,9 +1,9 @@
 <template>
     <div>
-        
-            <GenericPage :pageMeta="{ title: '属性管理', icon: 'User' }" />
-        
-
+        <GenericPage 
+            :pageMeta="{ title: '属性管理', icon: 'ChromeFilled' }" 
+            dataType="attr"
+        />
     </div>
 </template>
 

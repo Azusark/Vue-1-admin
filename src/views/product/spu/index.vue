@@ -1,9 +1,9 @@
 <template>
     <div>
-        
-            <GenericPage :pageMeta="{ title: 'spu管理', icon: 'User' }" />
-        
-
+        <GenericPage 
+            :pageMeta="{ title: 'SPU管理', icon: 'Calendar' }" 
+            dataType="spu"
+        />
     </div>
 </template>
 

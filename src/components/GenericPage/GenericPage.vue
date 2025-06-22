@@ -24,6 +24,7 @@
             v-model="searchForm.keyword"
             placeholder="请输入关键词"
             clearable
+            @keyup.enter="handleSearch"
           />
         </el-form-item>
         <el-form-item>
@@ -139,21 +140,31 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, onMounted, watch } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { Plus } from '@element-plus/icons-vue' // 加上这一行
-// 通过props接收页面元数据
-const loading = ref(false) // 补充loading
+import { Plus } from '@element-plus/icons-vue'
+import { useDataStore } from '@/store/modules/data'
 
 const props = defineProps({
   pageMeta: {
     type: Object,
     default: () => ({
       title: '页面标题',
-      icon: 'Document' // 默认图标
+      icon: 'Document'
     })
+  },
+  // 新增：数据类型
+  dataType: {
+    type: String,
+    required: true,
+    validator: function(value) {
+      return ['user', 'role', 'permission', 'brand', 'attr', 'spu', 'sku'].includes(value)
+    }
   }
 })
+
+const dataStore = useDataStore()
+const loading = ref(false)
 
 // 搜索表单
 const searchForm = reactive({
@@ -161,26 +172,13 @@ const searchForm = reactive({
 })
 
 // 表格数据
-const tableData = ref([
-  {
-    id: 1,
-    name: '示例数据1',
-    status: true,
-    createTime: '2023-01-01 10:00:00'
-  },
-  {
-    id: 2,
-    name: '示例数据2',
-    status: false,
-    createTime: '2023-01-02 11:00:00'
-  }
-])
+const tableData = ref([])
 
 // 分页
 const pagination = reactive({
   current: 1,
   size: 10,
-  total: 100
+  total: 0
 })
 
 // 对话框相关
@@ -199,15 +197,35 @@ const dialogTitle = computed(() => {
   return formData.id ? '编辑' : '新增'
 })
 
+// 加载数据
+const loadData = async () => {
+  loading.value = true
+  try {
+    const result = dataStore.getPaginatedData(
+      props.dataType,
+      pagination,
+      searchForm
+    )
+    tableData.value = result.data
+    pagination.total = result.total
+  } catch (error) {
+    ElMessage.error('加载数据失败')
+    console.error('Load data error:', error)
+  } finally {
+    loading.value = false
+  }
+}
+
 // 方法
 const handleSearch = () => {
-  console.log('搜索:', searchForm)
-  // 这里调用API获取数据
+  pagination.current = 1 // 重置到第一页
+  loadData()
 }
 
 const resetSearch = () => {
   searchForm.keyword = ''
-  handleSearch()
+  pagination.current = 1
+  loadData()
 }
 
 const handleCreate = () => {
@@ -220,7 +238,7 @@ const handleCreate = () => {
 }
 
 const handleEdit = (row) => {
-  Object.assign(formData, row)
+  Object.assign(formData, { ...row })
   dialogVisible.value = true
 }
 
@@ -229,33 +247,85 @@ const handleDelete = (row) => {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
     type: 'warning'
-  }).then(() => {
+  }).then(async () => {
+    try {
+      const success = dataStore.deleteData(props.dataType, row.id)
+      if (success) {
     ElMessage.success('删除成功')
-    // 这里调用删除API
+        loadData() // 重新加载数据
+      } else {
+        ElMessage.error('删除失败')
+      }
+    } catch (error) {
+      ElMessage.error('删除失败')
+      console.error('Delete error:', error)
+    }
+  }).catch(() => {
+    // 用户取消删除
   })
 }
 
 const submitForm = () => {
-  formRef.value.validate((valid) => {
+  formRef.value.validate(async (valid) => {
     if (valid) {
-      ElMessage.success('提交成功')
+      try {
+        if (formData.id) {
+          // 编辑
+          const result = dataStore.updateData(props.dataType, formData.id, {
+            name: formData.name,
+            status: formData.status
+          })
+          if (result) {
+            ElMessage.success('更新成功')
+            dialogVisible.value = false
+            loadData()
+          } else {
+            ElMessage.error('更新失败')
+          }
+        } else {
+          // 新增
+          const result = dataStore.createData(props.dataType, {
+            name: formData.name,
+            status: formData.status
+          })
+          if (result) {
+            ElMessage.success('创建成功')
       dialogVisible.value = false
-      // 这里调用保存API
+            loadData()
+          } else {
+            ElMessage.error('创建失败')
+          }
+        }
+      } catch (error) {
+        ElMessage.error('操作失败')
+        console.error('Submit error:', error)
+      }
     }
   })
 }
 
 const handleSizeChange = (val) => {
-  console.log(`每页 ${val} 条`)
   pagination.size = val
-  // 重新获取数据
+  pagination.current = 1 // 重置到第一页
+  loadData()
 }
 
 const handleCurrentChange = (val) => {
-  console.log(`当前页: ${val}`)
   pagination.current = val
-  // 重新获取数据
+  loadData()
 }
+
+// 监听数据类型变化，重新加载数据
+watch(() => props.dataType, () => {
+  loadData()
+})
+
+// 组件挂载时初始化数据
+onMounted(() => {
+  // 确保数据已初始化
+  dataStore.initData()
+  loadData()
+})
 </script>
 
 <style scoped>
