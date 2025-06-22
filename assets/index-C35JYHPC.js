@@ -1,0 +1,1 @@
+import{G as e}from"./GenericPage-0lF4s4gH.js";import{c as a,o as t,b as r}from"./index-9h7Yp_oU.js";const l={__name:"index",setup(o){return(n,c)=>(t(),a("div",null,[r(e,{pageMeta:{title:"品牌管理",icon:"ShoppingCartFull"},dataType:"brand"})]))}};export{l as default};
