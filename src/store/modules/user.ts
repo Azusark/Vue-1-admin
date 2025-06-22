@@ -7,7 +7,7 @@ import type { loginForm,loginResponseData } from '@/api/user/type';
 import type { UserState } from './types/type';
 //引入路由(常量路由)
 import { constantRoute } from '@/router/routes';  
-import { GET_TOKEN, SET_TOKEN } from '@/utils/token';
+import { GET_TOKEN, SET_TOKEN, REMOVE_TOKEN } from '@/utils/token';
 let useuseStore = defineStore('User', {
   //小仓库
   state: (): UserState => {
@@ -35,6 +35,13 @@ let useuseStore = defineStore('User', {
         else {
           return Promise.reject(new Error(result.data.message));
         }
+      },
+      // 用户登出
+      userLogout() {
+        // 清除pinia中的token
+        this.token = null;
+        // 清除localStorage中的token
+        REMOVE_TOKEN();
       }
   },
   getters: {
