@@ -1,0 +1,1 @@
+import{G as e}from"./GenericPage-CfCXc3xj.js";import{c as a,o as t,b as r}from"./index-Ds9P1K8t.js";const i={__name:"index",setup(o){return(c,n)=>(t(),a("div",null,[r(e,{pageMeta:{title:"SPU管理",icon:"Calendar"},dataType:"spu"})]))}};export{i as default};

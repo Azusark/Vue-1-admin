@@ -1,1 +1,0 @@
-import{G as e}from"./GenericPage-qwIRO77a.js";import{c as t,o as a,b as o}from"./index-_VhtEM0M.js";const p={__name:"index",setup(r){return(n,c)=>(a(),t("div",null,[o(e,{pageMeta:{title:"菜单管理",icon:"Monitor"},dataType:"permission"})]))}};export{p as default};
