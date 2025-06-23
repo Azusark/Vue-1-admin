@@ -1,1 +1,0 @@
-import{_ as n,c as o,o as r,g as t}from"./index-n3kMDzF0.js";const s={};function c(a,e){return r(),o("div",null,e[0]||(e[0]=[t("h1",null," 404 当前页面不存在 ",-1)]))}const _=n(s,[["render",c]]);export{_ as default};
