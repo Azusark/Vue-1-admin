@@ -1,0 +1,1 @@
+import{_ as n,c as a,o,g as t}from"./index-_VhtEM0M.js";const r={};function s(c,e){return o(),a("div",null,e[0]||(e[0]=[t("h1",null,null,-1)]))}const l=n(r,[["render",s],["__scopeId","data-v-1a38aded"]]);export{l as default};

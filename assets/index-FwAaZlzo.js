@@ -1,1 +1,0 @@
-import{G as e}from"./GenericPage-0lF4s4gH.js";import{c as a,o as t,b as r}from"./index-9h7Yp_oU.js";const i={__name:"index",setup(o){return(c,n)=>(t(),a("div",null,[r(e,{pageMeta:{title:"SKU管理",icon:"Orange"},dataType:"sku"})]))}};export{i as default};
